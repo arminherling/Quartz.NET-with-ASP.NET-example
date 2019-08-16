@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace Quartz.NET_with_ASP.NET_example
 {
@@ -15,6 +17,17 @@ namespace Quartz.NET_with_ASP.NET_example
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices( IServiceCollection services )
         {
+            // add quartz services
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+            // add our job
+            services.AddSingleton<HelloWorldJob>();
+            services.AddSingleton( new JobSchedule(
+                jobType: typeof( HelloWorldJob ),
+                cronExpression: "0/5 * * * * ?" ) ); // run every 5 seconds
+
+            services.AddHostedService<QuartzHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
