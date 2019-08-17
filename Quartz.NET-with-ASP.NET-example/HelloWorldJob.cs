@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quartz;
+using System;
 using System.Threading.Tasks;
 
 [DisallowConcurrentExecution]
@@ -14,7 +15,7 @@ public class HelloWorldJob : IJob
 
     public Task Execute( IJobExecutionContext context )
     {
-        logger.LogInformation( "Hello World!" );
+        logger.LogInformation( $"{DateTime.Now}: Hello World!" );
         return Task.CompletedTask;
     }
 }
