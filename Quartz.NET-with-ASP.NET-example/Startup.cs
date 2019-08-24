@@ -20,6 +20,7 @@ namespace Quartz.NET_with_ASP.NET_example
             // add quartz services
             services.AddSingleton<IJobFactory, SingletonJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<QuartzJobRunner>();
 
             // add our job
             services.AddSingleton<HelloWorldJob>();

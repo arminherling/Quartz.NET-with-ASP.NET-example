@@ -14,7 +14,7 @@ public class SingletonJobFactory : IJobFactory
 
     public IJob NewJob( TriggerFiredBundle bundle, IScheduler scheduler )
     {
-        return serviceProvider.GetRequiredService( bundle.JobDetail.JobType ) as IJob;
+        return serviceProvider.GetRequiredService<QuartzJobRunner>();
     }
 
     public void ReturnJob( IJob job )
